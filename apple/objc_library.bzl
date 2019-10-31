@@ -4,7 +4,8 @@ a wrapper of the native objc_library rule that adds support for header maps."""
 _GENDIR = "gen_include"
 
 def _module_include_dir(module_name):
-    return _GENDIR + "/" + module_name
+    basename = module_name.replace(":","")
+    return _GENDIR + "/" + basename
 
 def _default_includes(module_name):
     return [
@@ -14,6 +15,7 @@ def _default_includes(module_name):
 
 def _generated_header_path(module_name, hdr):
     basename = hdr.rpartition("/")[-1]
+    basename = basename.replace(":","")
     return _module_include_dir(module_name) + "/" + basename
 
 def objc_library(
@@ -55,7 +57,7 @@ def objc_library(
         native.genrule(
             name = headername + "_gen",
             srcs = [hdr],
-            outs = [_generated_header_path(module_name, hdr)],
+            outs = [_generated_header_path(module_name, headername)],
             cmd = """
             echo '#import "$(location %s)"' > $@
             """ % hdr
