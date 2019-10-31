@@ -16,6 +16,7 @@ def _default_includes(module_name):
 def _generated_header_path(module_name, hdr):
     basename = hdr.rpartition("/")[-1]
     basename = basename.replace(":","")
+    print("TESTING HERE"+_module_include_dir(module_name) + "/" + basename)
     return _module_include_dir(module_name) + "/" + basename
 
 def objc_library(
@@ -58,9 +59,6 @@ def objc_library(
             name = headername + "_gen",
             srcs = [hdr],
             outs = [_generated_header_path(module_name, headername)],
-            cmd = """
-            echo '#import "$(location %s)"' > $@
-            """ % headername
         )
 
     native.objc_library(
