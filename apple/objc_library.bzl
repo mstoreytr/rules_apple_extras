@@ -60,7 +60,7 @@ def objc_library(
             outs = [_generated_header_path(module_name, headername)],
             cmd = """
             echo '#import "$(location %s)"' > $@
-            """ % hdr
+            """ % headername
         )
 
     native.objc_library(
