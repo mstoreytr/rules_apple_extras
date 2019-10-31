@@ -51,6 +51,7 @@ def objc_library(
     module_name = module_name or name
 
     for hdr in hdrs:
+	hdr.replace(":","")
         native.genrule(
             name = hdr + "_gen",
             srcs = [hdr],
