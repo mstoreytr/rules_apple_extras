@@ -4,7 +4,7 @@ a wrapper of the native objc_library rule that adds support for header maps."""
 _GENDIR = "gen_include"
 
 def _module_include_dir(module_name):
-    return _GENDIR + "/" + basename
+    return _GENDIR + "/" + module_name
 
 def _default_includes(module_name):
     return [
@@ -51,7 +51,7 @@ def objc_library(
     module_name = module_name or name
 
     for hdr in hdrs:
-	print("HEADER = "+hdr+" "+module_name)
+        print("HEADER = "+hdr+" "+module_name)
         headername = hdr.replace(":","")
         native.genrule(
             name = headername + "_gen",
